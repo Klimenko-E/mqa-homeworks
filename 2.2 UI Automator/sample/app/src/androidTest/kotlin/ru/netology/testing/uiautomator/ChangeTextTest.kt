@@ -110,6 +110,43 @@ class ChangeTextTest {
         assertEquals(result, textToSet)
     }
 
+    @Test
+    fun testChangeEmptyText() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+        val firstText = device.findObject(By.res(packageName, "textToBeChanged")).text
+        device.findObject(By.res(packageName, "userInput")).click()
+        device.findObject(By.res(packageName, "buttonChange")).click()
+        val result = device.findObject(By.res(packageName, "textToBeChanged")).text
+        assertEquals(result, firstText)
+    }
+
+    @Test
+    fun testChangeSpaceText() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+        val firstText = device.findObject(By.res(packageName, "textToBeChanged")).text
+        device.findObject(By.res(packageName, "userInput")).text = "       "
+
+        device.findObject(By.res(packageName, "buttonChange")).click()
+        val result = device.findObject(By.res(packageName, "textToBeChanged")).text
+        assertEquals(result, firstText)
+    }
+
+    @Test
+    fun testTextView() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+        device.findObject(By.res(packageName, "userInput")).text = textToSet
+        device.findObject(By.res(packageName, "buttonActivity")).click()
+        waitForPackage(packageName)
+
+        val result = device.findObject(By.res(packageName, "text")).text
+        assertEquals(result, textToSet)
+    }
+
 }
 
 
